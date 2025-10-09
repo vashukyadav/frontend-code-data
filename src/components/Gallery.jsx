@@ -12,9 +12,12 @@ const Gallery = () => {
     const fetchPhotos = async () => {
       try {
         const response = await galleryAPI.getAll();
-        setPhotos(response.data);
+        // Safe array handling - ensure response.data is array
+        const data = Array.isArray(response.data) ? response.data : [];
+        setPhotos(data);
       } catch (err) {
         setError('Failed to load gallery');
+        setPhotos([]); // Set empty array on error
       } finally {
         setLoading(false);
       }
@@ -41,8 +44,10 @@ const Gallery = () => {
     );
   }
 
-  const firstRowPhotos = photos.slice(0, 4);
-  const secondRowPhotos = photos.slice(4, 7);
+  // Safe slicing with fallback to empty array
+  const safePhotos = Array.isArray(photos) ? photos : [];
+  const firstRowPhotos = safePhotos.slice(0, 4);
+  const secondRowPhotos = safePhotos.slice(4, 7);
 
   return (
     <Container className="gallery-section">

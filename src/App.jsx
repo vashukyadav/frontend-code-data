@@ -10,7 +10,12 @@ import AdminDashboard from './pages/AdminDashboard';
 
 function App() {
   return (
-    <Router>
+    <Router
+      future={{
+        v7_startTransition: true,
+        v7_relativeSplatPath: true
+      }}
+    >
       <div className="App">
         <SiteNavbar />
         <main className="main-content">
@@ -18,6 +23,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/portfolio/:category" element={<CategoryPage />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/contact/admin/login" element={<AdminLogin />} />
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
           </Routes>
