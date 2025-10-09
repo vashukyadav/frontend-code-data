@@ -7,6 +7,7 @@ import FullWidthSearch from './FullWidthSearch';
 const SiteNavbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [searchActive, setSearchActive] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -37,21 +38,23 @@ const SiteNavbar = () => {
       >
         <Container fluid>
           {/* Mobile Layout: Hamburger + Brand + Search */}
-          <div className="d-lg-none mobile-nav-layout">
-            <button 
-              className="hamburger-menu" 
-              onClick={toggleSidebar}
-              aria-label="Toggle navigation"
-            >
-              <span></span>
-              <span></span>
-              <span></span>
-            </button>
-            <Navbar.Brand as={Link} to="/" className={`brand-name ${scrolled ? 'text-white' : ''}`}>
+          <div className={`d-lg-none mobile-nav-layout ${searchActive ? 'search-active' : ''}`}>
+            {!searchActive && (
+              <button 
+                className="hamburger-menu" 
+                onClick={toggleSidebar}
+                aria-label="Toggle navigation"
+              >
+                <span></span>
+                <span></span>
+                <span></span>
+              </button>
+            )}
+            <Navbar.Brand as={Link} to="/" className={`brand-name ${scrolled ? 'text-white' : ''} ${searchActive ? 'd-none' : ''}`}>
               AMAN VERMA
             </Navbar.Brand>
             <div className="mobile-search">
-              <SearchBar isMobile={true} />
+              <SearchBar isMobile={true} onSearchActive={setSearchActive} />
             </div>
           </div>
           
