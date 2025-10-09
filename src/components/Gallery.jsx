@@ -11,11 +11,17 @@ const Gallery = () => {
   useEffect(() => {
     const fetchPhotos = async () => {
       try {
+        console.log('Fetching gallery data...');
         const response = await galleryAPI.getAll();
+        console.log('API Response:', response);
+        console.log('Response data:', response.data);
+        
         // Safe array handling - ensure response.data is array
         const data = Array.isArray(response.data) ? response.data : [];
+        console.log('Processed data:', data);
         setPhotos(data);
       } catch (err) {
+        console.error('Gallery API Error:', err);
         setError('Failed to load gallery');
         setPhotos([]); // Set empty array on error
       } finally {

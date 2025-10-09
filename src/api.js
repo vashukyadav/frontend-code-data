@@ -5,6 +5,7 @@ const API_BASE_URL =
     ? 'https://backend-code-2-46th.onrender.com'   // 🔹 Render backend URL
     : 'http://localhost:5000';                   // 🔹 Local development ke liye
 
+console.log('API Base URL:', API_BASE_URL);
 const api = axios.create({
   baseURL: API_BASE_URL,
 });
