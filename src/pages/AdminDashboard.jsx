@@ -164,7 +164,7 @@ const AdminDashboard = () => {
               <Button variant="success" onClick={() => setShowAddModal(true)}>
                 Add Photo
               </Button>
-              <Button variant="outline-secondary" onClick={handleLogout}>
+              <Button variant="outline-secondary" onClick={handleLogout} className="d-none d-lg-block">
                 Logout
               </Button>
             </div>

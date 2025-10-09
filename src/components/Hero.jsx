@@ -8,9 +8,7 @@ const Hero = () => {
         <Col lg={6} md={8} sm={10}>
           <h1 className="hero-title">Hi there!</h1>
           <p className="hero-text">
-            Welcome to my photography portfolio. I specialize in capturing life's most 
-            precious moments through the lens of creativity and passion. From intimate 
-            portraits to grand celebrations, every image tells a unique story.
+            I'm Aman Verma, a wedding photographer who loves capturing the beautiful moments of your special day. With 4 years of experience, I focus on genuine emotions and candid smiles, creating timeless images that tell your unique love story. Based in Mumbai, I believe every wedding is a celebration of love, and I'm here to help you cherish those memories forever. Let's create something magical together!
           </p>
           <hr className="hero-divider" />
         </Col>

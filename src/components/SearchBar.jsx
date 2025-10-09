@@ -62,6 +62,16 @@ const SearchBar = ({ isMobile = false, onSearchActive }) => {
     }
   };
 
+  const handleDesktopSearchToggle = () => {
+    setShowDesktopSearch(!showDesktopSearch);
+  };
+
+  const closeDesktopSearch = () => {
+    setShowDesktopSearch(false);
+    setSearchTerm('');
+    setShowDropdown(false);
+  };
+
   if (isMobile) {
     return (
       <>
@@ -70,7 +80,10 @@ const SearchBar = ({ isMobile = false, onSearchActive }) => {
             className="search-icon-btn"
             onClick={handleMobileSearchToggle}
           >
-            🔍
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.35-4.35"></path>
+            </svg>
           </button>
         </div>
         {showMobileSearch && (
@@ -115,32 +128,42 @@ const SearchBar = ({ isMobile = false, onSearchActive }) => {
   }
 
   return (
-    <div className="search-container">
-      <button 
-        className="search-icon-btn"
-        onClick={() => setShowDesktopSearch(!showDesktopSearch)}
-      >
-        🔍
-      </button>
+    <>
+      <div className="search-container">
+        <button 
+          className="search-icon-btn"
+          onClick={handleDesktopSearchToggle}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.35-4.35"></path>
+          </svg>
+        </button>
+      </div>
       {showDesktopSearch && (
-        <div className="desktop-search-dropdown">
-          <Form.Control
-            type="text"
-            placeholder="Search this site"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="full-width-search-input"
-            autoFocus
-          />
+        <div className="desktop-search-fullscreen">
+          <div className="desktop-search-header">
+            <Form.Control
+              type="text"
+              placeholder="Search this site"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="desktop-search-input"
+              autoFocus
+            />
+            <button className="close-search-btn" onClick={closeDesktopSearch}>
+              ×
+            </button>
+          </div>
           {showDropdown && (
-            <div className="full-width-search-dropdown">
+            <div className="desktop-search-results">
               {filteredPhotos.slice(0, 5).map((photo) => (
                 <div
                   key={photo.id}
                   className="search-item"
                   onClick={() => {
                     handlePhotoClick(photo);
-                    setShowDesktopSearch(false);
+                    closeDesktopSearch();
                   }}
                 >
                   <img src={photo.imageUrl} alt={photo.title} className="search-thumb" />
@@ -154,7 +177,7 @@ const SearchBar = ({ isMobile = false, onSearchActive }) => {
           )}
         </div>
       )}
-    </div>
+    </>
   );
 };
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import SearchBar from './SearchBar';
 import FullWidthSearch from './FullWidthSearch';
 
@@ -8,6 +8,8 @@ const SiteNavbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [searchActive, setSearchActive] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,12 +21,24 @@ const SiteNavbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    const token = localStorage.getItem('adminToken');
+    setIsLoggedIn(!!token);
+  }, []);
+
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
 
   const closeSidebar = () => {
     setSidebarOpen(false);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('adminToken');
+    setIsLoggedIn(false);
+    navigate('/');
+    closeSidebar();
   };
 
   return (
@@ -95,9 +109,6 @@ const SiteNavbar = () => {
               <div className="navbar-search">
                 <SearchBar />
               </div>
-              <Nav.Link as={Link} to="/admin/login" className="text-muted small">
-                Admin
-              </Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>
@@ -139,6 +150,18 @@ const SiteNavbar = () => {
           <Link to="/contact" className="sidebar-main-link" onClick={closeSidebar}>
             CONTACT
           </Link>
+          {!isLoggedIn ? (
+            <Link to="/admin/login" className="sidebar-main-link" onClick={closeSidebar}>
+              ADMIN LOGIN
+            </Link>
+          ) : (
+            <Link to="/admin/dashboard" className="sidebar-main-link" onClick={closeSidebar}>
+              ADMIN DASHBOARD
+            </Link>
+          )}
+          <button className="sidebar-main-link" onClick={handleLogout} style={{background: 'none', border: 'none', textAlign: 'left', width: '100%'}}>
+            LOGOUT
+          </button>
         </div>
       </div>
     </>
