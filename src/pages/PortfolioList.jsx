@@ -1,39 +1,70 @@
-import React from 'react';
-import { Container, Row, Col, Card } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { galleryAPI } from '../api';
+import ProductGrid from '../components/ProductGrid';
 
 const PortfolioList = () => {
-  const categories = [
-    { name: 'COUPLE PORTRAIT', slug: 'couple-portrait', description: 'Intimate couple photography sessions' },
-    { name: 'WEDDING', slug: 'wedding', description: 'Beautiful wedding ceremony and reception moments' },
-    { name: 'COCKTAIL', slug: 'cocktail', description: 'Elegant cocktail party and event photography' },
-    { name: 'MONOCHROME', slug: 'monochrome', description: 'Artistic black and white photography' },
-    { name: 'EDITORIAL', slug: 'editorial', description: 'High-fashion editorial photography sessions' },
-    { name: 'PRE WEDDING', slug: 'pre-wedding', description: 'Romantic pre-wedding photography shoots' }
-  ];
+  const [photos, setPhotos] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchPhotos = async () => {
+      try {
+        const response = await galleryAPI.getAll();
+        setPhotos(response.data);
+      } catch (err) {
+        setError('Failed to load portfolio');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPhotos();
+  }, []);
+
+  if (loading) {
+    return (
+      <Container className="text-center py-5">
+        <div>Loading...</div>
+      </Container>
+    );
+  }
+
+  if (error) {
+    return (
+      <Container className="py-5">
+        <div>{error}</div>
+      </Container>
+    );
+  }
 
   return (
-    <Container className="portfolio-list-page">
-      <Row className="mb-5">
-        <Col>
-          <h1 className="portfolio-main-title">Portfolio Categories</h1>
-          <p className="portfolio-subtitle">Explore our diverse photography collections</p>
-        </Col>
-      </Row>
-      <Row className="g-4">
-        {categories.map((category) => (
-          <Col key={category.slug} lg={4} md={6} sm={12}>
-            <Card as={Link} to={`/portfolio/${category.slug}`} className="portfolio-category-card h-100">
-              <Card.Body className="d-flex flex-column justify-content-center text-center">
-                <Card.Title className="category-card-title">{category.name}</Card.Title>
-                <Card.Text className="category-card-description">{category.description}</Card.Text>
-                <div className="category-arrow">→</div>
-              </Card.Body>
-            </Card>
+    <div className="portfolio-list-page">
+      <Container className="mb-4">
+        <Row>
+          <Col>
+            <Button as={Link} to="/" variant="outline-secondary" className="mb-3">
+              ← Back to Home
+            </Button>
+            <h2 className="category-title">All Portfolio</h2>
           </Col>
-        ))}
-      </Row>
-    </Container>
+        </Row>
+      </Container>
+      
+      {photos.length === 0 ? (
+        <Container>
+          <Row>
+            <Col className="text-center py-5">
+              <p>No photos found.</p>
+            </Col>
+          </Row>
+        </Container>
+      ) : (
+        <ProductGrid photos={photos} />
+      )}
+    </div>
   );
 };
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Container, Row, Col, Spinner, Alert, Button } from 'react-bootstrap';
 import { galleryAPI } from '../api';
-import CategoryPhotoCard from '../components/CategoryPhotoCard';
+import ProductGrid from '../components/ProductGrid';
 
 const CategoryPage = () => {
   const { category } = useParams();
@@ -59,19 +59,15 @@ const CategoryPage = () => {
           <h2 className="category-title">{categoryName}</h2>
         </Col>
       </Row>
-      <Row className="g-3">
-        {photos.map((photo) => (
-          <Col key={photo.id} xs={12} sm={6} lg={4}>
-            <CategoryPhotoCard photo={photo} />
-          </Col>
-        ))}
-      </Row>
-      {photos.length === 0 && (
+      
+      {photos.length === 0 ? (
         <Row>
           <Col className="text-center py-5">
             <p>No photos found in this category.</p>
           </Col>
         </Row>
+      ) : (
+        <ProductGrid photos={photos} />
       )}
     </Container>
   );

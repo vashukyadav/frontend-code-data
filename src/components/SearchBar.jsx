@@ -9,6 +9,7 @@ const SearchBar = ({ isMobile = false }) => {
   const [filteredPhotos, setFilteredPhotos] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const [showMobileSearch, setShowMobileSearch] = useState(false);
+  const [showDesktopSearch, setShowDesktopSearch] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -57,14 +58,14 @@ const SearchBar = ({ isMobile = false }) => {
           <div className="mobile-search-dropdown">
             <Form.Control
               type="text"
-              placeholder="Search photos..."
+              placeholder="Search this site"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="mobile-search-input"
+              className="full-width-search-input"
               autoFocus
             />
             {showDropdown && (
-              <div className="search-dropdown">
+              <div className="full-width-search-dropdown">
                 {filteredPhotos.slice(0, 5).map((photo) => (
                   <div
                     key={photo.id}
@@ -91,28 +92,42 @@ const SearchBar = ({ isMobile = false }) => {
 
   return (
     <div className="search-container">
-      <Form.Control
-        type="text"
-        placeholder="Search photos..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        className="search-input"
-      />
-      {showDropdown && (
-        <div className="search-dropdown">
-          {filteredPhotos.slice(0, 5).map((photo) => (
-            <div
-              key={photo.id}
-              className="search-item"
-              onClick={() => handlePhotoClick(photo)}
-            >
-              <img src={photo.imageUrl} alt={photo.title} className="search-thumb" />
-              <div className="search-info">
-                <div className="search-title">{photo.title}</div>
-                <div className="search-category">{photo.category}</div>
-              </div>
+      <button 
+        className="search-icon-btn"
+        onClick={() => setShowDesktopSearch(!showDesktopSearch)}
+      >
+        🔍
+      </button>
+      {showDesktopSearch && (
+        <div className="desktop-search-dropdown">
+          <Form.Control
+            type="text"
+            placeholder="Search this site"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="full-width-search-input"
+            autoFocus
+          />
+          {showDropdown && (
+            <div className="full-width-search-dropdown">
+              {filteredPhotos.slice(0, 5).map((photo) => (
+                <div
+                  key={photo.id}
+                  className="search-item"
+                  onClick={() => {
+                    handlePhotoClick(photo);
+                    setShowDesktopSearch(false);
+                  }}
+                >
+                  <img src={photo.imageUrl} alt={photo.title} className="search-thumb" />
+                  <div className="search-info">
+                    <div className="search-title">{photo.title}</div>
+                    <div className="search-category">{photo.category}</div>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
+          )}
         </div>
       )}
     </div>
