@@ -2,13 +2,17 @@ import axios from 'axios';
 
 const API_BASE_URL =
   process.env.NODE_ENV === 'production'
-    ? 'https://backend-code-2-46th.onrender.com'   // 🔹 Render backend URL
-    : 'http://localhost:5000';                   // 🔹 Local development ke liye
+    ? 'https://backend-code-1-nctw.onrender.com'
+    : 'http://localhost:5000';
 
 console.log('API Base URL:', API_BASE_URL);
 const api = axios.create({
   baseURL: API_BASE_URL,
   withCredentials: true,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  timeout: 10000
 });
 
 export const galleryAPI = {

@@ -59,14 +59,14 @@ const Gallery = () => {
     <Container className="gallery-section">
       <Row className="g-4 mb-4">
         {firstRowPhotos.map((photo) => (
-          <Col key={photo.id} xl={3} lg={6} md={6} sm={12}>
+          <Col key={photo._id || photo.id} xl={3} lg={6} md={6} sm={12}>
             <PhotoCard photo={photo} />
           </Col>
         ))}
       </Row>
       <Row className="g-4 justify-content-center">
         {secondRowPhotos.map((photo) => (
-          <Col key={photo.id} xl={3} lg={4} md={6} sm={12}>
+          <Col key={photo._id || photo.id} xl={3} lg={4} md={6} sm={12}>
             <PhotoCard photo={photo} />
           </Col>
         ))}

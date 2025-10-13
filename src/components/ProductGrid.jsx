@@ -39,7 +39,7 @@ const ProductGrid = ({ photos }) => {
               const gridClass = getGridClass(photoIndex, group.length);
               
               return (
-                <div key={photo.id} className={`grid-item ${gridClass}`}>
+                <div key={photo._id || photo.id || photoIndex} className={`grid-item ${gridClass}`}>
                   <div className="photo-wrapper">
                     <img 
                       src={photo.imageUrl} 

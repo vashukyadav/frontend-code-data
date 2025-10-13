@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Button, Card, Form, Modal, Alert, Nav, Tab, Badge, Table } from 'react-bootstrap';
+import { Container, Row, Col, Button, Card, Form, Modal, Alert, Nav, Tab, Badge } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { galleryAPI, contactAPI } from '../api';
+import { galleryAPI } from '../api';
 import axios from 'axios';
 
 const AdminDashboard = () => {
@@ -223,7 +223,7 @@ const AdminDashboard = () => {
               ) : (
                 <div className="contacts-list">
                   {contacts.map((contact) => (
-                    <Card key={contact.id} className={`mb-3 ${!contact.read ? 'border-primary' : ''}`}>
+                    <Card key={contact._id || contact.id} className={`mb-3 ${!contact.read ? 'border-primary' : ''}`}>
                       <Card.Header className="d-flex justify-content-between align-items-center">
                         <div>
                           <strong>{contact.name}</strong>
@@ -295,8 +295,8 @@ const AdminDashboard = () => {
                 value={newPhoto.category}
                 onChange={(e) => setNewPhoto({...newPhoto, category: e.target.value})}
               >
-                {categories.map(cat => (
-                  <option key={cat} value={cat}>{cat}</option>
+                {categories.map((cat, index) => (
+                  <option key={`${cat}-${index}`} value={cat}>{cat}</option>
                 ))}
               </Form.Select>
             </Form.Group>
