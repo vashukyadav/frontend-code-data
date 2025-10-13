@@ -109,6 +109,9 @@ const SiteNavbar = () => {
               <div className="navbar-search">
                 <SearchBar />
               </div>
+              <Nav.Link as={Link} to="/admin/login" className="text-muted small">
+                Admin
+              </Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>
