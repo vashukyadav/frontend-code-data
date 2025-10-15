@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button, Card, Form, Modal, Alert, Nav, Tab, Badge } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { galleryAPI } from '../api';
-import axios from 'axios';
+import { galleryAPI, contactAPI, adminAPI } from '../api';
+import api from '../api';
 
 const AdminDashboard = () => {
   const [photos, setPhotos] = useState([]);
@@ -19,7 +19,7 @@ const AdminDashboard = () => {
   const categories = ['PORTRAIT', 'COUPLE PORTRAIT', 'WEDDING', 'COCKTAIL', 'MONOCHROME', 'EDITORIAL', 'PRE WEDDING'];
   
   const groupedPhotos = categories.reduce((acc, category) => {
-    acc[category] = photos.filter(photo => photo.category === category);
+    acc[category] = Array.isArray(photos) ? photos.filter(photo => photo.category === category) : [];
     return acc;
   }, {});
 
@@ -36,9 +36,11 @@ const AdminDashboard = () => {
   const fetchPhotos = async () => {
     try {
       const response = await galleryAPI.getAll();
-      setPhotos(response.data);
+      const data = Array.isArray(response.data) ? response.data : [];
+      setPhotos(data);
     } catch (error) {
       setMessage('Failed to load photos');
+      setPhotos([]);
     }
   };
 
@@ -49,13 +51,15 @@ const AdminDashboard = () => {
         setMessage('No admin token found');
         return;
       }
-      const response = await axios.get('/api/admin/contacts', {
+      const response = await api.get('/api/admin/contacts', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
-      setContacts(response.data);
+      const data = Array.isArray(response.data) ? response.data : [];
+      setContacts(data);
     } catch (error) {
       console.error('Contact fetch error:', error);
       setMessage('Failed to load contacts: ' + (error.response?.data?.error || error.message));
+      setContacts([]);
     }
   };
 
@@ -71,7 +75,7 @@ const AdminDashboard = () => {
 
     try {
       const token = localStorage.getItem('adminToken');
-      await axios.post('/api/admin/gallery', formData, {
+      await api.post('/api/admin/gallery', formData, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'multipart/form-data'
@@ -102,7 +106,7 @@ const AdminDashboard = () => {
 
     try {
       const token = localStorage.getItem('adminToken');
-      await axios.delete(`/api/admin/gallery/${photoToDelete.id}`, {
+      await api.delete(`/api/admin/gallery/${photoToDelete.id}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       setMessage('Photo deleted successfully');
@@ -124,7 +128,7 @@ const AdminDashboard = () => {
   const handleMarkAsRead = async (id) => {
     try {
       const token = localStorage.getItem('adminToken');
-      await axios.put(`/api/admin/contacts/${id}/read`, {}, {
+      await api.put(`/api/admin/contacts/${id}/read`, {}, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       fetchContacts();
@@ -137,7 +141,7 @@ const AdminDashboard = () => {
     if (!window.confirm('Are you sure you want to delete this contact?')) return;
     try {
       const token = localStorage.getItem('adminToken');
-      await axios.delete(`/api/admin/contacts/${id}`, {
+      await api.delete(`/api/admin/contacts/${id}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       setMessage('Contact deleted successfully');
@@ -152,7 +156,7 @@ const AdminDashboard = () => {
     navigate('/');
   };
 
-  const unreadCount = contacts.filter(c => !c.read).length;
+  const unreadCount = Array.isArray(contacts) ? contacts.filter(c => !c.read).length : 0;
 
   return (
     <Container className="admin-dashboard">
