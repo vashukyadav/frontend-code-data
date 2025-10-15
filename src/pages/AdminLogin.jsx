@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { adminAPI } from '../api';
 
 const AdminLogin = () => {
   const [password, setPassword] = useState('');
@@ -15,7 +15,7 @@ const AdminLogin = () => {
     setError('');
 
     try {
-      const response = await axios.post('/api/admin/login', { password });
+      const response = await adminAPI.login(password);
       localStorage.setItem('adminToken', response.data.token);
       navigate('/admin/dashboard');
     } catch (err) {

@@ -27,4 +27,8 @@ export const contactAPI = {
   delete: (id) => api.delete(`/api/admin/contacts/${id}`),
 };
 
+export const adminAPI = {
+  login: (password) => api.post('/api/admin/login', { password }),
+};
+
 export default api;
