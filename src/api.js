@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const API_BASE_URL =
   process.env.NODE_ENV === 'production'
-    ? 'https://backend-code-1-nctw.onrender.com'
+    ? (process.env.REACT_APP_API_URL || 'https://backend-code-1-nctw.onrender.com')
     : 'http://localhost:5000';
 
 console.log('API Base URL:', API_BASE_URL);
