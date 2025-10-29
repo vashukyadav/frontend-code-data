@@ -48,7 +48,7 @@ const Contact = () => {
                   <div className="contact-image mb-4">
                     <img 
                       src="/varma.png" 
-                      alt="Aman Verma" 
+                      alt="Tarun Sahu" 
                       className="photographer-image"
                       onError={(e) => {
                         e.target.src = 'https://via.placeholder.com/300x300/333/fff?text=Aman+Verma';
@@ -56,7 +56,7 @@ const Contact = () => {
                     />
                   </div>
                   <div className="contact-info">
-                    <h3>Aman Verma</h3>
+                    <h3>Tarun Sahu</h3>
                     <p className="contact-subtitle">Professional Photographer</p>
                     
                     <div className="contact-details">
@@ -67,7 +67,12 @@ const Contact = () => {
                       
                       <div className="contact-item">
                         <strong>Phone:</strong>
-                        <p>+91 98765 43210</p>
+                        <p>+91 8085259745</p>
+                      </div>
+                      
+                      <div className="contact-item">
+                        <strong>Instagram:</strong>
+                        <p><a href="https://www.instagram.com/heyy_.tarunnn?igsh=MTNwOXJjbHYyZmlqdQ==" target="_blank" rel="noopener noreferrer">@heyy_.tarunnn</a></p>
                       </div>
                       
                       <div className="contact-item">
@@ -127,7 +132,7 @@ const Contact = () => {
                           name="phone"
                           value={formData.phone}
                           onChange={handleChange}
-                          placeholder="+91 98765 43210"
+                          placeholder="+91 8085259745"
                         />
                       </Form.Group>
                       
