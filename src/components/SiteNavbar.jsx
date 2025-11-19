@@ -64,7 +64,7 @@ const SiteNavbar = () => {
               </button>
             )}
             <Navbar.Brand as={Link} to="/" className={`brand-name ${scrolled ? 'text-white' : ''} ${searchActive ? 'd-none' : ''}`}>
-              AMAN VERMA
+              TARUN SAHU
             </Navbar.Brand>
             <div className="mobile-search">
               <SearchBar isMobile={true} onSearchActive={setSearchActive} />
@@ -73,7 +73,7 @@ const SiteNavbar = () => {
           
           {/* Desktop Layout */}
           <Navbar.Brand as={Link} to="/" className={`brand-name d-none d-lg-block ${scrolled ? 'text-white' : ''}`}>
-            AMAN VERMA
+            TARUN SAHU
           </Navbar.Brand>
 
           {/* Desktop Navigation */}
