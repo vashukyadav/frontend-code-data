@@ -267,6 +267,18 @@ body {
   font-size: 1.2rem;
   color: #333 !important;
   text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.brand-name .fa-camera {
+  color: #666;
+  font-size: 1.1rem;
+  transition: color 0.3s ease;
+}
+
+.site-navbar.scrolled .brand-name .fa-camera {
+  color: #fff;
 }
 
 .navbar-nav .nav-link {
