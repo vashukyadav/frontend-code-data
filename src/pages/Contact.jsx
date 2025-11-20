@@ -47,12 +47,10 @@ const Contact = () => {
                 <div className="contact-info-section">
                   <div className="contact-image mb-4">
                     <img 
-                      src="/varma.png" 
+                      src="/tarun.jpeg" 
                       alt="Tarun Sahu" 
                       className="photographer-image"
-                      onError={(e) => {
-                        e.target.src = 'https://via.placeholder.com/300x300/333/fff?text=Aman+Verma';
-                      }}
+                      
                     />
                   </div>
                   <div className="contact-info">
@@ -77,7 +75,7 @@ const Contact = () => {
                       
                       <div className="contact-item">
                         <strong>Location:</strong>
-                        <p>Mumbai, India</p>
+                        <p>Bhopal, India</p>
                       </div>
                       
                       <div className="contact-item">
