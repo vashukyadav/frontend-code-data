@@ -470,7 +470,7 @@ body {
 
 .photographer-image {
   width: 100%;
-  max-width: 300px;
+  max-width: 350px;
   height: auto;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
@@ -479,6 +479,18 @@ body {
 .contact-image {
   text-align: center;
   margin-bottom: 2rem;
+}
+
+.contact-info-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.contact-info {
+  width: 100%;
+  max-width: 350px;
 }
 
 .contact-info h3 {
@@ -617,7 +629,7 @@ body {
   }
   
   .photographer-image {
-    max-width: 250px;
+    max-width: 280px;
   }
   
   .contact-info h3 {
@@ -627,6 +639,11 @@ body {
   
   .contact-subtitle {
     text-align: center;
+  }
+  
+  .contact-details {
+    text-align: left;
+    width: 100%;
   }
   
   .contact-form-card .card-body {
